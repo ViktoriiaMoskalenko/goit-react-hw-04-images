@@ -33,7 +33,6 @@ export function App() {
               )
 
           }
-      console.log('respData.hits', respData.hits)
       if (page === 1) {
         setLoader(false)
         return setData(data)
