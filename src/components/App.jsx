@@ -17,6 +17,7 @@ export function App() {
   const [loader, setLoader] = useState(false);
   const [btnActive, setBtnActive] = useState(false)
 
+  
   useEffect(() => {
         if (!value) {
       return
@@ -28,16 +29,16 @@ export function App() {
             setLoader(false)
             
             return (
-              setData(data.concat(respData.hits)),
+              setData(state => state.concat(respData.hits)),
               setBtnActive(false)
               )
 
           }
       if (page === 1) {
         setLoader(false)
-        return setData(data)
+        return setData(state => state)
       }
-        setData(data.concat(respData.hits))
+        setData(state => state.concat(respData.hits))
       
           setLoader(false)
         }).catch(error => console.log(error))
