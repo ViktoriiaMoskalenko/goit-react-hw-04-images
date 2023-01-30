@@ -25,7 +25,7 @@ export function App() {
       setLoader(true)
       const dataImg = API.addImages(value, page)
     dataImg.then(respData => {
-          if (data.length === respData.totalHits) {
+          if (page === 6) {
             setLoader(false)
             
             return (
