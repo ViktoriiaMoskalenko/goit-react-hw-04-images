@@ -16,16 +16,20 @@ export function App() {
   const [value, setValue] = useState('');
   const [loader, setLoader] = useState(false);
   const [btnActive, setBtnActive] = useState(false)
+  const [totalPage, setTotalPage] = useState(null)
 
-  
+  const PER_PAGE = 20;
+
   useEffect(() => {
         if (!value) {
       return
     }
       setLoader(true)
-      const dataImg = API.addImages(value, page)
-    dataImg.then(respData => {
-          if (page === 6) {
+      const dataImg = API.addImages(value, page, PER_PAGE)
+      dataImg.then(respData => {
+    const totalPageHits = Math.ceil(respData.totalHits / PER_PAGE);
+        setTotalPage(totalPageHits)  
+      if (page > totalPage) {
             setLoader(false)
             
             return (
@@ -42,12 +46,14 @@ export function App() {
       
           setLoader(false)
         }).catch(error => console.log(error))
-  }, [page, value])
+  }, [page, value, totalPage])
 
 
   const addImages = async (valueInput) => {
-    const dataImg = await API.addImages(valueInput)
-      setData(dataImg.hits)
+    const dataImg = await API.addImages(valueInput,page, PER_PAGE)
+        const totalPageHits = Math.ceil(dataImg.totalHits / PER_PAGE);
+    setTotalPage(totalPageHits)
+    setData(dataImg.hits)
       setValue(valueInput)
       setPage(1)
         setBtnActive(true)
